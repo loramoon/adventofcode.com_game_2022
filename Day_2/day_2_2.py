@@ -1,25 +1,15 @@
 def my_turn(my_choice):
-    if my_choice == "Y": #draw
-        if line[0] == "A":
-            return 4
-        if line[0] == "B":
-            return 5
-        if line[0] == "C":
-            return 6
-    if my_choice == "X": #lose
-        if line[0] == "A":
-            return 3
-        if line[0] == "B":
-            return 1
-        if line[0] == "C":
-            return 2
-    if my_choice == "Z": #won
-        if line[0] == "A":
-            return 8
-        if line[0] == "B":
-            return 9
-        if line[0] == "C":
-            return 7
+    strategy = {}
+    if my_choice == "Y":
+        strategy = {"A": 4, "B": 5, "C": 6}
+
+    if my_choice == "X":
+        strategy = {"A": 3, "B": 1, "C": 2}
+
+    if my_choice == "Z":
+        strategy = {"A": 8, "B": 9, "C": 7}
+
+    return strategy[line[0]]
 
 
 file = open('day_2.txt')
