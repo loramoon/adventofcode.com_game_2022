@@ -13,3 +13,6 @@ while True:
         current_elf = 0
 
 print(max(elves))
+
+sorted_elves = sorted(elves, reverse=True)
+print(sum(sorted_elves[0:3]))
