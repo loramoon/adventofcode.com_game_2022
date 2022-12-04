@@ -26,3 +26,4 @@ while True:
 
 print(total_task_1)
 print(total_task_2)
+file.close()
