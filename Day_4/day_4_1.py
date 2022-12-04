@@ -6,14 +6,14 @@ while True:
     line = file.readline()
     if not line:
         break
-    first_area, second_area = [], []
-    first_range, second_range = line.split(",")
-    first_range_start, first_range_end = [int(i) for i in first_range.split("-")]
-    second_range_start, second_range_end = [int(i) for i in second_range.split("-")]
+        
+    first_area = [int(i) for i in line.split(",")[0].split("-")]
+    second_area = [int(i) for i in line.split(",")[1].split("-")]
 
-    for place in range(first_range_start, first_range_end + 1):
+    for place in range(first_area[0]+1, first_area[1]):
         first_area.append(place)
-    for place in range(second_range_start, second_range_end + 1):
+
+    for place in range(second_area[0]+1, second_area[1]):
         second_area.append(place)
 
     if set(second_area).issubset(set(first_area)) or set(first_area).issubset(second_area):
