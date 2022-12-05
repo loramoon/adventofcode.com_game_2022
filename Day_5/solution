@@ -1,0 +1,28 @@
+def parse_start_stacks(stack_box):
+    position = [""] * 9
+    for row in stack_box[:-1]:
+        for i, box in enumerate(row[1::4]):
+            if box != " ":
+                position[i] += box
+    return position
+
+
+source = open("day_5.txt").read()
+start_stacks = [boxes.split("\n") for boxes in source.split("\n\n")][0]
+instructions = [instructions.split("\n") for instructions in source.split("\n\n")][1]
+
+all_boxes = parse_start_stacks(start_stacks)
+
+stacks = all_boxes
+stacks2 = all_boxes
+
+for instruction in instructions:
+    move, boxes, frm, old, to, new = [int(x) if x.isdigit() else x for x in instruction.split()]
+    
+    #Task_1:
+    stacks[old - 1], stacks[new - 1] = stacks[old - 1][boxes:], stacks[old - 1][:boxes][::-1] + stacks[new - 1]
+print("".join(box[0] for box in stacks))
+
+    #Task_2:
+#     stacks2[old - 1], stacks2[new - 1] = stacks2[old - 1][boxes:], stacks2[old - 1][:boxes] + stacks2[new - 1]
+# print("".join(box[0] for box in stacks2))
