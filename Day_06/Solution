@@ -1,0 +1,12 @@
+message = open('day_6.txt').read()
+
+
+def code_search(code_size):
+    for index in range(len(message)):
+        checked_string = message[index: index + code_size]
+        if len(set(checked_string)) == code_size:
+            return index + code_size
+
+
+print(code_search(4))
+print(code_search(14))
