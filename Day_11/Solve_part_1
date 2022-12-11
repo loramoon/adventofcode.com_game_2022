@@ -1,0 +1,77 @@
+from collections import deque
+
+file = open('11.txt')
+Monkey = {}
+Operation = {}
+Test = {}
+if_true = {}
+if_false = {}
+Activity = {}
+
+for i in range(100):
+    line = file.readline().strip()
+    if 'Monkey' in line:
+        monkey, number = [int(x) if x.isdigit() else x for x in line[:-1].split()]
+        q = deque([int(el) for el in file.readline().strip().split(": ")[1].split(', ')])
+        Monkey[number] = q
+        Activity[number] = 0
+        line = file.readline().strip()
+        if 'Operation' in line:
+            opetator, k = [int(x) if x.isdigit() else x for x in line.split("new = old ")[1].split()]
+            Operation[number] = [opetator, k]
+            line = file.readline().strip()
+            if 'Test' in line:
+                divisible = line.split('by ')[1]
+                Test[number] = int(divisible)
+                line = file.readline().strip()
+                if 'true' in line:
+                    next_monkey = line.split('true: throw to monkey ')[1]
+                    if_true[number] = int(next_monkey)
+                    line = file.readline().strip()
+                    if 'false' in line:
+                        next_monkey = line.split('false: throw to monkey ')[1]
+                        if_false[number] = int(next_monkey)
+
+for cycle in range(20):
+    for i in range(len(Monkey)):
+
+        while Monkey[i]:
+            item = Monkey[i].popleft()
+            Activity[i] += 1
+            worry = 0
+            opetator = Operation[i][0]
+            k = Operation[i][1]
+            if k == 'old':
+                k = item
+            if opetator == '*':
+                worry = item * k
+            elif opetator == '/':
+                worry = item / k
+            elif opetator == '-':
+                worry = item - k
+            elif opetator == '+':
+                worry = item + k
+
+            worry //= 3
+            divisible = Test[i]
+
+            true_next_monkey = if_true[i]
+            false_next_monkey = if_false[i]
+            if worry % divisible == 0:
+                Monkey[true_next_monkey].append(worry)
+            else:
+                Monkey[false_next_monkey].append(worry)
+
+sorted_activity = sorted(Activity.items(), key=lambda x: -x[1])
+monkey_business = 1
+
+count = 0
+for tuple_ in sorted_activity:
+    if count == 2:
+        break
+    _, business = tuple_[0], tuple_[1]
+    monkey_business *= business
+    count += 1
+
+print(monkey_business)
+#55216
